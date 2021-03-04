@@ -1,0 +1,20 @@
+{
+  "name": "react-birthday-reminder-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steph-morrissey/react-birthday-reminder-server.git"
+  },
+  "author": "Stephanie Morrissey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/steph-morrissey/react-birthday-reminder-server/issues"
+  },
+  "homepage": "https://github.com/steph-morrissey/react-birthday-reminder-server#readme"
+}
