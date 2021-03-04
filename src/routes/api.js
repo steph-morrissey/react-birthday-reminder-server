@@ -3,7 +3,6 @@ const db = require('../models');
 
 const apiRouter = express.Router();
 
-// GET all birthday reminders
 const getAllReminders = async (_, res) => {
   try {
     const reminders = await db.Reminder.find({});
@@ -17,7 +16,6 @@ const getAllReminders = async (_, res) => {
   }
 };
 
-// GET all birthday reminders for current date
 const getTodaysReminders = async (_, res) => {
   try {
     let [month, date] = new Date().toLocaleDateString('en-US').split('/');
@@ -33,12 +31,62 @@ const getTodaysReminders = async (_, res) => {
   }
 };
 
-// ADD a reminder
-// DELETE a reminder
-// UPDATE a reminder
+const addBirthdayReminder = async (req, res) => {
+  try {
+    const payload = req.body;
+
+    db.Reminder.create(payload);
+
+    res.status(201).json({
+      reminder: 'Birthday reminder successfully added!',
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+const updateBirthdayReminder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { body } = req;
+
+    const updateReminder = await db.Reminder.findByIdAndUpdate(id, body);
+
+    res.status(200).json({
+      reminder: 'Birthday reminder successfully updated!',
+      data: updateReminder,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+const deleteBirthdayReminder = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleteReminder = await db.Reminder.findByIdAndDelete(id);
+
+    res.status(200).json({
+      reminder: 'Birthday reminder successfully deleted!',
+      data: deleteReminder,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
 
 // routes
 apiRouter.get('/allReminders', getAllReminders);
 apiRouter.get('/reminders', getTodaysReminders);
+apiRouter.post('/reminders', addBirthdayReminder);
+apiRouter.put('/reminders/:id', updateBirthdayReminder);
+apiRouter.delete('/reminders/:id', deleteBirthdayReminder);
 
 module.exports = apiRouter;
