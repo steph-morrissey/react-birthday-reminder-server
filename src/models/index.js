@@ -1,3 +1,3 @@
-import Reminder from './Reminder';
-
-export default Reminder;
+module.exports = {
+  Reminder: require('./reminder'),
+};

@@ -1,7 +1,6 @@
 const PORT = process.env.PORT || 8000;
 
-const DB_URI =
-  process.env.MONGODB_URI || 'mongodb://localhost/birthdayReminder';
+const DB_URI = process.env.MONGODB_URI || 'mongodb://localhost/reminder';
 
 const MONGOOSE_OPTIONS = {
   useUnifiedTopology: true,

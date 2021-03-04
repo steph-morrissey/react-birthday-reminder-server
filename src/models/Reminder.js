@@ -15,12 +15,8 @@ const reminderSchema = new Schema({
     type: Date,
     required: true,
   },
-  age: {
-    type: Number,
-    required: true,
-  },
 });
 
 const Reminder = mongoose.model('Reminder', reminderSchema);
 
-export default Reminder;
+module.exports = Reminder;

@@ -1,7 +1,6 @@
 const express = require('express');
-const axios = require('axios');
 
-const apiRouter = express.Router();
+// const apiRouter = express.Router();
 
 // GET all reminders for current date
 // ADD a reminder

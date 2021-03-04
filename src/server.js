@@ -16,7 +16,7 @@ app.use(
   }),
 );
 app.use(cors());
-app.use('/api', apiRoutes);
+//app.use('/api', apiRoutes);
 
 mongoose.connect(DB_URI, MONGOOSE_OPTIONS);
 
