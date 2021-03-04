@@ -11,8 +11,12 @@ const reminderSchema = new Schema({
     type: String,
     required: true,
   },
-  dateOfBirth: {
-    type: Date,
+  birthday: {
+    type: String,
+    required: true,
+  },
+  birthYear: {
+    type: String,
     required: true,
   },
 });

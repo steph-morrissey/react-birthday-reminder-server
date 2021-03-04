@@ -1,3 +1,3 @@
 module.exports = {
-  Reminder: require('./reminder'),
+  Reminder: require('./Reminder'),
 };
