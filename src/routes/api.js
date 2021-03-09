@@ -19,7 +19,6 @@ const getAllBirthdays = async (_, res) => {
 const getTodaysBirthdays = async (_, res) => {
   try {
     let [month, date] = new Date().toLocaleDateString('en-US').split('/');
-    console.log(month, date);
     const currentDate = date;
     const currentMonth = month;
     const reminders = await db.Reminder.find({
