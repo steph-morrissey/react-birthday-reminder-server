@@ -3,11 +3,11 @@ const db = require('../models');
 
 const apiRouter = express.Router();
 
-const getAllReminders = async (_, res) => {
+const getAllBirthdays = async (_, res) => {
   try {
     const reminders = await db.Reminder.find({});
     res.json({
-      results: reminders,
+      data: reminders,
     });
   } catch (error) {
     res.status(500).json({
@@ -16,13 +16,18 @@ const getAllReminders = async (_, res) => {
   }
 };
 
-const getTodaysReminders = async (_, res) => {
+const getTodaysBirthdays = async (_, res) => {
   try {
     let [month, date] = new Date().toLocaleDateString('en-US').split('/');
-    const currentDate = `${date}-${month}`;
-    const reminders = await db.Reminder.find({ birthday: currentDate });
+    console.log(month, date);
+    const currentDate = date;
+    const currentMonth = month;
+    const reminders = await db.Reminder.find({
+      day: `${currentDate}`,
+      month: `${currentMonth}`,
+    });
     res.json({
-      results: reminders,
+      data: reminders,
     });
   } catch (error) {
     res.status(500).json({
@@ -31,14 +36,14 @@ const getTodaysReminders = async (_, res) => {
   }
 };
 
-const addBirthdayReminder = async (req, res) => {
+const addBirthday = async (req, res) => {
   try {
     const payload = req.body;
 
     db.Reminder.create(payload);
 
     res.status(201).json({
-      reminder: 'Birthday reminder successfully added!',
+      message: 'Birthday reminder successfully added!',
     });
   } catch (error) {
     res.status(500).json({
@@ -47,7 +52,7 @@ const addBirthdayReminder = async (req, res) => {
   }
 };
 
-const updateBirthdayReminder = async (req, res) => {
+const updateBirthday = async (req, res) => {
   try {
     const { id } = req.params;
     const { body } = req;
@@ -55,7 +60,7 @@ const updateBirthdayReminder = async (req, res) => {
     const updateReminder = await db.Reminder.findByIdAndUpdate(id, body);
 
     res.status(200).json({
-      reminder: 'Birthday reminder successfully updated!',
+      message: 'Birthday reminder successfully updated!',
       data: updateReminder,
     });
   } catch (error) {
@@ -65,14 +70,14 @@ const updateBirthdayReminder = async (req, res) => {
   }
 };
 
-const deleteBirthdayReminder = async (req, res) => {
+const deleteBirthday = async (req, res) => {
   try {
     const { id } = req.params;
 
     const deleteReminder = await db.Reminder.findByIdAndDelete(id);
 
     res.status(200).json({
-      reminder: 'Birthday reminder successfully deleted!',
+      message: 'Birthday reminder successfully deleted!',
       data: deleteReminder,
     });
   } catch (error) {
@@ -83,10 +88,10 @@ const deleteBirthdayReminder = async (req, res) => {
 };
 
 // routes
-apiRouter.get('/allReminders', getAllReminders);
-apiRouter.get('/reminders', getTodaysReminders);
-apiRouter.post('/reminders', addBirthdayReminder);
-apiRouter.put('/reminders/:id', updateBirthdayReminder);
-apiRouter.delete('/reminders/:id', deleteBirthdayReminder);
+apiRouter.get('/allReminders', getAllBirthdays);
+apiRouter.get('/reminders', getTodaysBirthdays);
+apiRouter.post('/reminders', addBirthday);
+apiRouter.put('/reminders/:id', updateBirthday);
+apiRouter.delete('/reminders/:id', deleteBirthday);
 
 module.exports = apiRouter;
