@@ -3,9 +3,15 @@ const db = require('../models');
 
 const apiRouter = express.Router();
 
-const getAllBirthdays = async (_, res) => {
+const getTodaysBirthdays = async (_, res) => {
   try {
-    const reminders = await db.Reminder.find({});
+    let [month, date] = new Date().toLocaleDateString('en-US').split('/');
+    const currentDate = date;
+    const currentMonth = month;
+    const reminders = await db.Reminder.find({
+      day: `${currentDate}`,
+      month: `${currentMonth}`,
+    });
     res.json({
       data: reminders,
     });
@@ -16,15 +22,10 @@ const getAllBirthdays = async (_, res) => {
   }
 };
 
-const getTodaysBirthdays = async (_, res) => {
+const getAllBirthdays = async (_, res) => {
   try {
-    let [month, date] = new Date().toLocaleDateString('en-US').split('/');
-    const currentDate = date;
-    const currentMonth = month;
-    const reminders = await db.Reminder.find({
-      day: `${currentDate}`,
-      month: `${currentMonth}`,
-    });
+    const reminders = await db.Reminder.find({});
+
     res.json({
       data: reminders,
     });
@@ -87,7 +88,7 @@ const deleteBirthday = async (req, res) => {
 };
 
 // routes
-apiRouter.get('/allReminders', getAllBirthdays);
+apiRouter.get('/monthly', getAllBirthdays);
 apiRouter.get('/reminders', getTodaysBirthdays);
 apiRouter.post('/reminders', addBirthday);
 apiRouter.put('/reminders/:id', updateBirthday);
